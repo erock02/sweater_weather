@@ -6,7 +6,7 @@ class BaseService
   end
 
   def self.conn_weather
-    Faraday.new(url: "https://api.openweathermap.org/data/3.0/") do |req|
+    Faraday.new(url: "https://api.openweathermap.org") do |req|
       req.params['appid'] = ENV['weather_api_key']
     end
   end
