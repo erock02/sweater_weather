@@ -34,8 +34,23 @@ describe "munchie", :vcr do
   end
 
   describe 'sad path testing' do
-    it 'sends a 400 status if location is missing or blank' do
+    it 'sends a 400 status if location is missing' do
       get "/api/v1/munchies?food=chinese"
+      expect(response.status).to eq(400)
+    end
+
+    it 'sends a 400 status if food is missing' do
+      get "/api/v1/munchies?location=denver,co"
+      expect(response.status).to eq(400)
+    end
+
+    it 'sends a 400 status if location is blank' do
+      get "/api/v1/munchies?location=&food=chinese"
+      expect(response.status).to eq(400)
+    end
+
+    it 'sends a 400 status if food is blank' do
+      get "/api/v1/munchies?location=denver,co&food="
       expect(response.status).to eq(400)
     end
   end
