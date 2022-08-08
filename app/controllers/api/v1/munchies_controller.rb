@@ -1,5 +1,6 @@
 class Api::V1::MunchiesController < ApplicationController
   def index
-    render json: MunchieFacade.restaurant(params[:location], params[:food])
+    @munchie = MunchieFacade.restaurant(params[:location], params[:food])
+    render json: MunchieSerializer.new(@munchie)
   end
 end
