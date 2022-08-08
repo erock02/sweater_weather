@@ -12,8 +12,8 @@ class BaseService
   end
 
   def self.conn_yelp
-    Faraday.new(url: "https://api.yelp.com/v3") do |req|
-      req.params['Authorization'] = ENV['yelp_api_key']
+    Faraday.new(url: "https://api.yelp.com") do |req|
+      req.headers["Authorization"] = ENV['yelp_api_key']
     end
   end
 
