@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :forecast, only: [:index]
       resources :users, only: [:new, :create]
       resources :sessions, only: [:create]
+      resources :roadtrip, only: [:create]
     end
   end
 end
