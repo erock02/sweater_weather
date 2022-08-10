@@ -35,4 +35,18 @@ describe "Roadtrip", :vcr do
       expect(trip[:data][:attributes][:weather_at_eta]).to have_key(:conditions)
       expect(trip[:data][:attributes][:weather_at_eta][:conditions]).to be_a(String)
   end
+
+  it "sad path: wrong api key returns 401 status" do
+    user1 = User.create!(email: 'AH@awesomeactors.com', password: '123abc', password_confirmation: '123abc')
+    trip_params = ({
+                origin: "Denver,CO",
+                destination: "Pueblo,CO",
+                api_key: "wrongapikey"
+              })
+      headers = {"CONTENT_TYPE" => "application/json"}
+
+      post "/api/v1/roadtrip", headers: headers, params: JSON.generate(trip_params)
+
+      expect(response.status).to eq(401)
+  end
 end
