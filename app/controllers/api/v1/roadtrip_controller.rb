@@ -5,7 +5,7 @@ class Api::V1::RoadtripController < ApplicationController
       @route = MapFacade.route(params[:origin], params[:destination])
       render json: RoadtripSerializer.new(@route)
     else
-      render status: 400
+      render status: 401
     end
   end
 end
