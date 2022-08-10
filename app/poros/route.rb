@@ -9,7 +9,8 @@ class Route
   def initialize(route_data, from, to)
     @id = "null"
     @travel_time = "#{route_data[:route][:formattedTime][0..1]} hours, #{route_data[:route][:formattedTime][3..4]} minutes"
-    @hours = route_data[:route][:formattedTime][0..1].to_i
+    @hours = route_data[:route][:formattedTime][0..1].to_i % 24
+    @days = route_data[:route][:formattedTime][0..1].to_i / 24
     @start_city = from
     @end_city = to
   end
@@ -17,11 +18,23 @@ class Route
   def weather_at_eta
     @location = MapFacade.location(@end_city)
     @weather = WeatherFacade.weather(@location.latitude, @location.longitude)
-    if @hours > 0 && @hours < 9
+    if @days > 0
+      {
+        temperature: @weather.daily_weather[@hours][:max_temp],
+        conditions: @weather.daily_weather[@hours][:description]
+      }
+    elsif @hours > 0 && @hours < 9
       {
         temperature: @weather.hourly_weather[@hours][:temp],
         conditions: @weather.hourly_weather[@hours][:description]
       }
+    elsif @hours == 0
+      {
+        temperature: @weather.current_weather[:temp],
+        conditions: @weather.current_weather[:description]
+      }
+    else
+      "weather data is unavailable"
     end
 
   end
