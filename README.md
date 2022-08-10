@@ -45,11 +45,11 @@ This endpoint returns the current weather, hourly weather (for the next 8 hours)
 
 To call these endpoints, in Postman, under the address bar, click on “Body”, select “raw”, which will show a dropdown that says “Text” in it, choose “JSON” from the list and enter the parameters as shown:
 
-POST /api/v1/users
+<p> POST /api/v1/users </p>
 <img width="844" alt="Screen Shot 2022-08-10 at 2 03 11 AM" src="https://user-images.githubusercontent.com/95315216/183861380-48430f6f-e268-4db0-b3bc-959b19fd39db.png">
 
-POST /api/v1/sessions
+<p> POST /api/v1/sessions </p>
 <img width="847" alt="Screen Shot 2022-08-10 at 2 05 27 AM" src="https://user-images.githubusercontent.com/95315216/183861862-e7cf2608-a62b-4b39-bbd6-3a5c50e8f01e.png">
 
-POST /api/v1/roadtrip *in order to use this endpoint, a POST request must be sent to users in order to obtain an api_key first
+<p> POST /api/v1/roadtrip *in order to use this endpoint, a POST request must be sent to users in order to obtain an api_key first </p>
 <img width="847" alt="Screen Shot 2022-08-10 at 2 06 32 AM" src="https://user-images.githubusercontent.com/95315216/183862036-a4bd381c-8a05-4909-8e4a-c19acfdf6b1c.png">
