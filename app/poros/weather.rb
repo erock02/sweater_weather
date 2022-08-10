@@ -11,12 +11,12 @@ class Weather
       datetime: Time.at(@weather_data[:current][:dt]),
       sunrise: Time.at(@weather_data[:current][:sunrise]),
       sunset: Time.at(@weather_data[:current][:sunset]),
-      temp: @weather_data[:current][:temp],
+      temperature: @weather_data[:current][:temp],
       feels_like: @weather_data[:current][:feels_like],
       humidity: @weather_data[:current][:humidity],
       uvi: @weather_data[:current][:uvi],
       visibility: @weather_data[:current][:visibility],
-      description: @weather_data[:current][:weather][0][:description]
+      conditions: @weather_data[:current][:weather][0][:description]
     }
   end
 
@@ -25,8 +25,8 @@ class Weather
     @weather_data[:hourly].first(8).each do |forecast|
       @hourly_array << {
           time: Time.at(forecast[:dt]).strftime("%H:%M:%S") ,
-          temp: forecast[:temp],
-          description: forecast[:weather][0][:description],
+          temperature: forecast[:temp],
+          conditions: forecast[:weather][0][:description],
           icon: forecast[:weather][0][:icon]
         }
     end

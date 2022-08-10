@@ -21,12 +21,12 @@ describe "Forecast", :vcr do
     expect(forecast[:data][:attributes][:current_weather]).to have_key(:datetime)
     expect(forecast[:data][:attributes][:current_weather]).to have_key(:sunrise)
     expect(forecast[:data][:attributes][:current_weather]).to have_key(:sunset)
-    expect(forecast[:data][:attributes][:current_weather]).to have_key(:temp)
+    expect(forecast[:data][:attributes][:current_weather]).to have_key(:temperature)
     expect(forecast[:data][:attributes][:current_weather]).to have_key(:feels_like)
     expect(forecast[:data][:attributes][:current_weather]).to have_key(:humidity)
     expect(forecast[:data][:attributes][:current_weather]).to have_key(:uvi)
     expect(forecast[:data][:attributes][:current_weather]).to have_key(:visibility)
-    expect(forecast[:data][:attributes][:current_weather]).to have_key(:description)
+    expect(forecast[:data][:attributes][:current_weather]).to have_key(:conditions)
 
     expect(forecast[:data][:attributes]).to have_key(:daily_weather)
     expect(forecast[:data][:attributes][:daily_weather]).to be_a(Array)
@@ -39,6 +39,12 @@ describe "Forecast", :vcr do
       expect(dweather).to have_key(:min_temp)
       expect(dweather).to have_key(:conditions)
       expect(dweather).to have_key(:icon)
+    end
+    forecast[:data][:attributes][:hourly_weather].each do |hweather|
+      expect(hweather).to have_key(:time)
+      expect(hweather).to have_key(:temperature)
+      expect(hweather).to have_key(:conditions)
+      expect(hweather).to have_key(:icon)
     end
 
   end
