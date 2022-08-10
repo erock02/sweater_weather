@@ -18,20 +18,20 @@ class Route
   def weather_at_eta
     @location = MapFacade.location(@end_city)
     @weather = WeatherFacade.weather(@location.latitude, @location.longitude)
-    if @days > 0
-      {
-        temperature: @weather.daily_weather[@hours][:max_temp],
-        conditions: @weather.daily_weather[@hours][:description]
-      }
-    elsif @hours > 0 && @hours < 9
+    if @hours == 0
+    {
+      temperature: @weather.current_weather[:temp],
+      conditions: @weather.current_weather[:description]
+    }
+    elsif @hours < 8
       {
         temperature: @weather.hourly_weather[@hours][:temp],
         conditions: @weather.hourly_weather[@hours][:description]
       }
-    elsif @hours == 0
+    elsif @days < 4
       {
-        temperature: @weather.current_weather[:temp],
-        conditions: @weather.current_weather[:description]
+        temperature: @weather.daily_weather[@days][:max_temp],
+        conditions: @weather.daily_weather[@days][:description]
       }
     else
       "weather data is unavailable"
