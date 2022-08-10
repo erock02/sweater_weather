@@ -20,18 +20,18 @@ class Route
     @weather = WeatherFacade.weather(@location.latitude, @location.longitude)
     if @hours == 0
     {
-      temperature: @weather.current_weather[:temp],
-      conditions: @weather.current_weather[:description]
+      temperature: @weather.current_weather[:temperature],
+      conditions: @weather.current_weather[:conditions]
     }
     elsif @hours < 8
       {
-        temperature: @weather.hourly_weather[@hours][:temp],
-        conditions: @weather.hourly_weather[@hours][:description]
+        temperature: @weather.hourly_weather[@hours][:temperature],
+        conditions: @weather.hourly_weather[@hours][:conditions]
       }
     elsif @days < 4
       {
         temperature: @weather.daily_weather[@days][:max_temp],
-        conditions: @weather.daily_weather[@days][:description]
+        conditions: @weather.daily_weather[@days][:conditions]
       }
     else
       "weather data is unavailable"
