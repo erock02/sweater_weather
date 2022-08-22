@@ -17,7 +17,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
         environment:
           POSTGRES_USER: root
-          POSTGRES_DB: sweater_weather_test
+          POSTGRES_DB: sweater-weather_test
     steps:
       - checkout # check out the code in the project directory
       - run:
