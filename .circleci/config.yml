@@ -21,8 +21,8 @@ jobs:
     steps:
       - checkout # check out the code in the project directory
       - run:
-        name: Install dependencies
-        command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+          name: Install dependencies
+          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
 
       - run: sudo apt install -y postgresql-client || true
       - run: bundle install # run the `bundle install` command
