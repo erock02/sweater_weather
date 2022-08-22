@@ -8,5 +8,10 @@ jobs:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout # check out the code in the project directory
+      - run:
+          name: install dependencies
+          command: |
+            gem update --system
+            gem install bundler
       - run: bundle install # run the `bundle install` command
       - run: bundle exec rspec # run the `rspec` test suite
