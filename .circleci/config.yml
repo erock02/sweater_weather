@@ -6,19 +6,11 @@ jobs:
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-<<<<<<< HEAD
-          environment:
-            RAILS_ENV: test
-            PGHOST: 127.0.0.1
-            PGUSER: root
-
-=======
         environment:
           RAILS_ENV: test
           PGHOST: 127.0.0.1
           PGUSER: root
-            
->>>>>>> d1eb10c24e21ea56600077e0b380719f3a910956
+
       - image: cimg/postgres:14.0
         auth:
           username: mydockerhub-user
