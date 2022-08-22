@@ -16,8 +16,8 @@ jobs:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
         environment:
-          POSTGRES_USER: testuser
-          POSTGRES_DB: circle-test_test
+          POSTGRES_USER: root
+          POSTGRES_DB: sweater_weather_test
     steps:
       - checkout # check out the code in the project directory
       - run:
