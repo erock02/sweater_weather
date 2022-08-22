@@ -16,7 +16,7 @@ jobs:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
         environment:
-          POSTGRES_USER: root
+          POSTGRES_USER: testuser
           POSTGRES_DB: sweater_weather_test
     steps:
       - checkout # check out the code in the project directory
@@ -35,5 +35,4 @@ jobs:
           command: |
             bundle exec rake db:create
             bundle exec rake db:structure:load
-            rails db:migrate
       - run: bundle exec rspec # run the `rspec` test suite
