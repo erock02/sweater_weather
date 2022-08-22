@@ -6,12 +6,18 @@ jobs:
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+        environment:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: root
             
       - image: cimg/postgres:14.0
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-
+        environment:
+          POSTGRES_USER: testuser
+          POSTGRES_DB: circle-test_test
     steps:
       - checkout # check out the code in the project directory
       - run:
@@ -20,9 +26,12 @@ jobs:
             gem update --system
             gem install bundler
       - run: bundle install # run the `bundle install` command
-
+      - save_cache:
+          key: sweater-weather-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
       - run:
-        name: Database Setup
+          name: Database Setup
           command: |
             bundle exec rake db:create
             bundle exec rake db:structure:load
