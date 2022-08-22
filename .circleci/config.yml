@@ -6,11 +6,19 @@ jobs:
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+<<<<<<< HEAD
           environment:
             RAILS_ENV: test
             PGHOST: 127.0.0.1
             PGUSER: root
 
+=======
+        environment:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: root
+            
+>>>>>>> d1eb10c24e21ea56600077e0b380719f3a910956
       - image: cimg/postgres:14.0
         auth:
           username: mydockerhub-user
@@ -27,12 +35,12 @@ jobs:
       - run: sudo apt install -y postgresql-client || true
       - run: bundle install # run the `bundle install` command
       - save_cache:
-        key: sweater-weather-{{ checksum "Gemfile.lock" }}
-        paths:
-          - vendor/bundle
+          key: sweater-weather-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
       - run:
-        name: Database Setup
-        command: |
-          bundle exec rake db:create
-          bundle exec rake db:structure:load
+          name: Database Setup
+          command: |
+            bundle exec rake db:create
+            bundle exec rake db:structure:load
       - run: bundle exec rspec # run the `rspec` test suite
