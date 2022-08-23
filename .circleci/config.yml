@@ -18,19 +18,19 @@ jobs:
   test:
     parallelism: 3
     docker:
-      - image: cimg/ruby:2.7.4
+      - image: circleci/ruby:2.7.4
+        environment:
+            BUNDLE_JOBS: 3
+            BUNDLE_PATH: ./vendor/bundle
+            RAILS_ENV: test
+            DB_USERNAME: ericespindola
+            DB_NAME: sweater_weather_test
+            DB_PASSWORD: ''
       - image: circleci/postgres:9.5-alpine
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: sweater_weather_test
           POSTGRES_PASSWORD: ""
-    environment:
-      BUNDLE_JOBS: "3"
-      BUNDLE_RETRY: "3"
-      PGHOST: 127.0.0.1
-      PGUSER: root
-      PGPASSWORD: ""
-      RAILS_ENV: test
     steps:
       - checkout
       - ruby/install-deps
