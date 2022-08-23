@@ -1,38 +1,57 @@
 version: 2.1
+
+orbs:
+  ruby: circleci/ruby@1.1.0
+  # node: circleci/node@2
+
 jobs:
   build:
     docker:
-      - image: cimg/ruby:2.7.4 # the primary container, where your job's commands are run
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-        environment:
-          RAILS_ENV: test
-          PGHOST: 127.0.0.1
-          PGUSER: root
-
-      - image: cimg/postgres:14.0
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-        environment:
-          POSTGRES_USER: root
-          POSTGRES_DB: sweater-weather_test
+      - image: cimg/ruby:2.7.4
     steps:
-      - checkout # check out the code in the project directory
+      - checkout
+      - ruby/install-deps
+      # Store bundle cache
+      # - node/install-packages:
+      #     pkg-manager: yarn
+      #     cache-key: "yarn.lock"
+  test:
+    parallelism: 3
+    docker:
+      - image: cimg/ruby:2.7.4
+      - image: circleci/postgres:9.5-alpine
+        environment:
+          POSTGRES_USER: circleci-demo-ruby
+          POSTGRES_DB: sweater_weather_test
+          POSTGRES_PASSWORD: ""
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      PGHOST: 127.0.0.1
+      PGUSER: myuser
+      PGPASSWORD: ""
+      RAILS_ENV: test
+    steps:
+      - checkout
+      - ruby/install-deps
+      # - node/install-packages:
+      #     pkg-manager: yarn
+      #     cache-key: "yarn.lock"
       - run:
-          name: Install dependencies
-          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: bundle exec rails db:schema:load --trace
+      # Run rspec in parallel
+      - ruby/rspec-test
+      # - ruby/rubocop-check
 
-      - run: sudo apt install -y postgresql-client || true
-      - run: bundle install # run the `bundle install` command
-      # - save_cache:
-      #     key: sweater-weather-{{ checksum "Gemfile.lock" }}
-      #     paths:
-      #       - vendor/bundle
-      - run:
-          name: Database Setup
-          command: |
-            bundle exec rake db:create
-            bundle exec rake db:structure:load
-      - run: bundle exec rspec # run the `rspec` test suite
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
