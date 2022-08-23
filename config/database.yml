@@ -24,7 +24,8 @@ default: &default
 development:
   <<: *default
   database: sweater_weather_development
-
+  username: root
+  password: ""
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
@@ -58,7 +59,7 @@ development:
 test:
   <<: *default
   database: sweater_weather_test
-  username: ericespindola
+  username: root
   password: ""
 
 # As with config/secrets.yml, you never want to store sensitive information,
