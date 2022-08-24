@@ -60,7 +60,6 @@ describe "Roadtrip", :vcr do
       headers = {"CONTENT_TYPE" => "application/json"}
 
       post "/api/v1/roadtrip", headers: headers, params: JSON.generate(trip_params)
-      binding.pry
       expect(response.status).to eq(200)
 
       trip = JSON.parse(response.body, symbolize_names: true)
