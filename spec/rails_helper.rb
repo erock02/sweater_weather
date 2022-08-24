@@ -77,4 +77,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<api_key>') { ENV['weather_api_key'] }
   config.filter_sensitive_data('<api_key>') { ENV['map_api_key'] }
   config.configure_rspec_metadata!
+  config.default_cassette_options = {
+  :match_requests_on => [:method, :host, :path],
+  }
 end

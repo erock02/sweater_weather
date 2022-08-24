@@ -3,10 +3,11 @@ require 'rails_helper'
 describe "Roadtrip", :vcr do
   it "can send roadtrip information" do
     user1 = User.create!(email: 'AH@awesomeactors.com', password: '123abc', password_confirmation: '123abc')
+    user1.update_attribute(:api_key, 'test')
     trip_params = ({
                 origin: "Denver,CO",
                 destination: "Pueblo,CO",
-                api_key: user1.api_key
+                api_key: 'test'
               })
       headers = {"CONTENT_TYPE" => "application/json"}
 
@@ -38,6 +39,7 @@ describe "Roadtrip", :vcr do
 
   it "sad path: wrong api key returns 401 status" do
     user1 = User.create!(email: 'AH@awesomeactors.com', password: '123abc', password_confirmation: '123abc')
+    user1.update_attribute(:api_key, 'test')
     trip_params = ({
                 origin: "Denver,CO",
                 destination: "Pueblo,CO",
@@ -52,10 +54,11 @@ describe "Roadtrip", :vcr do
 
   it "sad path: impossible route returns custom message" do
     user1 = User.create!(email: 'AH@awesomeactors.com', password: '123abc', password_confirmation: '123abc')
+    user1.update_attribute(:api_key, 'test')
     trip_params = ({
                 origin: "Denver,CO",
                 destination: "London,UK",
-                api_key: user1.api_key
+                api_key: 'test'
               })
       headers = {"CONTENT_TYPE" => "application/json"}
 
