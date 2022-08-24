@@ -16,6 +16,7 @@ gem 'puma', '~> 3.11'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+gem 'rspec_junit_formatter'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
